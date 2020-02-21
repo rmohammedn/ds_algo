@@ -35,7 +35,7 @@ int main()
 {
     std::unique_ptr<Resource> res = std::make_unique<Resource>();
     std::shared_ptr<Resource> res2 = std::make_shared<Resource>();
-    auto res3 = res2;
+    auto res3{res2};
     useResource(res);
     return 0;
 }

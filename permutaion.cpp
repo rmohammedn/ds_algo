@@ -21,7 +21,7 @@ std::vector<std::vector<int>> getPermute(std::vector<int> &A, int l, int r)
         for (int i=l; i<r; i++)
         {
             std::swap(A[l], A[i]);
-            getPermute(A, l+1, r);
+            vec = getPermute(A, l+1, r);
             std::swap(A[l], A[i]);
         }
     }

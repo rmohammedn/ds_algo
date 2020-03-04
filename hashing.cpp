@@ -42,22 +42,27 @@ void HashingC::insert(int key)
 {
     int indx = hash(key);
     std::shared_ptr<Node> node = std::make_shared<Node>(key);
-    auto head = hash_table[indx];
-    while (head.get()->next)
-        head = (head.get())->next;
-    
-    head.get()->next = node;
+    if (!hash_table[indx])
+        hash_table[indx] = node;
+    else
+    {
+        auto head = hash_table[indx];
+        while (head)
+            head = head->next;
+        
+        head = node;
+    }
 }
 
 std::shared_ptr<Node> HashingC::lookUp(int key)
 {
     int indx = hash(key);
     auto head = hash_table[indx];
-    while(head.get()->next != nullptr && head.get()->val != key)
-        head = head.get()->next;
+    while(head && head->val != key)
+        head = head->next;
     
-    if (head->next == nullptr)
-        return (head.get())->next;
+    if (head == nullptr)
+        return head;
     return head;
 }
 
@@ -65,8 +70,9 @@ int main()
 {
     Node n1{1}, n2{2}, n3{3};
     HashingC hash{};
-    //hash.insert(1);
-    //auto head = hash.lookUp(1);
-    //std::cout << head.get()->val << std::endl;
+    hash.insert(1);
+    auto head = hash.lookUp(1);
+    if (head)
+        std::cout << head->val << std::endl;
     return 0;
 }

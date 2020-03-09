@@ -37,11 +37,22 @@ Node* pushFront(Node *head, int val)
     return temp;
 }
 
+std::shared_ptr<Node> pushSmart(std::shared_ptr<Node> &head, int val)
+{
+    std::shared_ptr<Node> temp = std::make_shared<Node>(val);
+    temp->next = head.get();
+    return temp;
+}
+
 int main()
 {
-    //std::shared_ptr<Node> head = std::make_shared<Node>(5);
-    //std::shared_ptr<Node> node1 = std::make_shared<Node>(2);
-    //head->next = node1.get();
+    std::shared_ptr<Node> head = std::make_shared<Node>(5);
+    for (int i=0; i<10; i++)
+        head = pushSmart(head, i);
+    
+    printList(head.get());
+
+    /*
     Node *head = new Node(5);
     for (int i=1; i<10; i++)
         head = pushFront(head, i);
@@ -49,5 +60,6 @@ int main()
     printList(head);
     deleteList(head);
     printList(head);
+    */
     return 0;
 }

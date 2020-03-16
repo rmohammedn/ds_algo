@@ -4,21 +4,21 @@
 struct Node
 {
     int val;
-    Node *next;
+    std::shared_ptr<Node> next;
     Node(int x):val(x), next(nullptr){}
     ~Node(){ next = nullptr;}
 };
 
-void printList(Node* head)
+void printList(std::shared_ptr<Node> head)
 {
-    while(head != nullptr)
+    while(head)
     {
         std::cout << head->val << ", ";
         head = head->next;
     }
     std::cout << std::endl;
 }
-
+/*
 void deleteList(Node* &head)
 {
     Node *temp = head;
@@ -36,21 +36,21 @@ Node* pushFront(Node *head, int val)
     temp->next = head;
     return temp;
 }
-
+*/
 std::shared_ptr<Node> pushSmart(std::shared_ptr<Node> &head, int val)
 {
     std::shared_ptr<Node> temp = std::make_shared<Node>(val);
-    temp->next = head.get();
+    temp->next = head;
     return temp;
 }
 
 int main()
 {
     std::shared_ptr<Node> head = std::make_shared<Node>(5);
-    for (int i=0; i<10; i++)
+    for (int i=0; i<4; i++)
         head = pushSmart(head, i);
     
-    printList(head.get());
+    printList(head);
 
     /*
     Node *head = new Node(5);
